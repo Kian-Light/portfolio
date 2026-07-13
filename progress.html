@@ -106,6 +106,7 @@
         .status-badge.done { 
             background: #d4edda; 
             color: #155724; 
+            border-color: #c3e6cb;
         }
 
         .timestamp {
@@ -138,20 +139,44 @@
         </section>
 
         <section>
-            <h2>Timeline</h2>
+            <h2>Timeline Roadmap</h2>
             
             <ul class="timeline">
                 
+                <li class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-circle" style="background: #28a745; box-shadow: 0 0 0 2px #28a745;"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="timestamp">Phase 1 — <strong>Completed</strong></span>
+                        <h3>Project Scoping & Regional Bounds <span class="status-badge done">Done</span></h3>
+                        <p>Defined environmental consultancy deployment criteria. Audited spatial boundary overlaps between public Environment Agency telemetry networks, regional BGS lithology files, and study boundaries across Cheshire and Greater Manchester.</p>
+                    </div>
+                </li>
+
                 <li class="timeline-item current">
                     <div class="timeline-marker">
                         <div class="timeline-circle"></div>
                     </div>
                     <div class="timeline-content">
-                        <span class="timestamp">July 2026 — <strong>In Progress</strong></span>
+                        <span class="timestamp">Phase 2 — <strong>In Progress</strong></span>
                         <h3>Data Sourcing & Terrain Pre-Processing <span class="status-badge active">Active Focus</span></h3>
-                        <p>Sourcing DEM tiles for the Cheshire / Greater Manchester study area and reprojecting to a 
-                        consistent metric CRS (EPSG:27700). Prototyping <code>r.watershed</code> flow accumulation 
-                        thresholds on a single test basin in QGIS before scripting the loop.</p>
+                        <p>Acquiring regional elevation models and reprojecting data grids to uniform projections to prevent alignment artifacts during heavy loop sweeps.</p>
+                        
+                        <ul style="margin-top: 12px; padding-left: 0; list-style-type: none;">
+                            <li style="margin-bottom: 5px; font-size: 0.88rem; color: var(--text-main);">
+                                <span style="color: #28a745; font-weight: bold; margin-right: 6px;">✓</span> 
+                                Download raw DEM raster mosaics for study extents
+                            </li>
+                            <li style="margin-bottom: 5px; font-size: 0.88rem; color: var(--text-main);">
+                                <span style="color: #28a745; font-weight: bold; margin-right: 6px;">✓</span> 
+                                Reproject raw coordinate grids into uniform metric projections (EPSG:27700)
+                            </li>
+                            <li style="margin-bottom: 5px; font-size: 0.88rem; color: var(--text-main); font-weight: 600;">
+                                <span style="color: #ff4757; font-weight: bold; margin-right: 8px;">→</span> 
+                                Prototyping GRASS <code>r.watershed</code> flow thresholds on a test basin in QGIS <span style="font-size: 0.75rem; color: #ff4757; font-style: italic;">(Current Task)</span>
+                            </li>
+                        </ul>
                     </div>
                 </li>
 
@@ -160,10 +185,9 @@
                         <div class="timeline-circle"></div>
                     </div>
                     <div class="timeline-content">
-                        <span class="timestamp">Next</span>
+                        <span class="timestamp">Phase 3 — <strong>Next Step</strong></span>
                         <h3>Automation via qgisprocess <span class="status-badge">Planned</span></h3>
-                        <p>Build an R loop using the <code>qgisprocess</code> package to run <code>r.watershed</code> 
-                        across the full folder of DEMs, outputting basin and stream layers for each sub-catchment.</p>
+                        <p>Drafting the core R loop array with the <code>qgisprocess</code> package. The loop pipeline will automatically pipe the processed raster folders into <code>r.watershed</code> routines, calculating continuous hydrographic basins and generating vectorized stream networks mapped into clean <code>sf</code> spatial data frame polygons.</p>
                     </div>
                 </li>
 
@@ -172,11 +196,42 @@
                         <div class="timeline-circle"></div>
                     </div>
                     <div class="timeline-content">
-                        <span class="timestamp">Next</span>
-                        <h3>Morphometric & Hydrogeological Statistics <span class="status-badge">Planned</span></h3>
-                        <p>Calculate zonal statistics, drainage density, TWI/SPI per sub-basin using <code>sf</code> and 
-                        <code>terra</code>, then overlay with BGS geology and borehole data to flag likely groundwater–
-                        surface water interaction zones.</p>
+                        <span class="timestamp">Phase 4 — <strong>Future Milestone</strong></span>
+                        <h3>Morphometric Parameter Calculations <span class="status-badge">Planned</span></h3>
+                        <p>Leveraging <code>sf</code> and <code>terra</code> packages to script high-performance zonal statistics across derived catchments. Extracted matrix parameters will isolate mean slope profiles, baseline elevations, cumulative sub-basin areas, and mathematical drainage density indices.</p>
+                    </div>
+                </li>
+
+                <li class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-circle"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="timestamp">Phase 5 — <strong>Future Milestone</strong></span>
+                        <h3>Hydrogeological Matrix & Groundwater Analytics <span class="status-badge">Planned</span></h3>
+                        <p>Generating terrain surface indices including Topographic Wetness Index (TWI) and Stream Power Index (SPI). These arrays will be programmatically overlayed against British Geological Survey aquifer layers and open-source borehole coordinates to flag surface-to-groundwater interaction nodes.</p>
+                    </div>
+                </li>
+
+                <li class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-circle"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="timestamp">Phase 6 — <strong>Future Milestone</strong></span>
+                        <h3>Recharge Zoning & Land Use Integration <span class="status-badge">Planned</span></h3>
+                        <p>Intersecting composition and configuration landscape ecology metrics with underlying geology matrices to extract an exploratory "Potential Recharge Zone" layer. The output text will evaluate how urban surface fragmentation changes water delivery paths and impacts recharge water quality parameters.</p>
+                    </div>
+                </li>
+
+                <li class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="timeline-circle"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <span class="timestamp">Phase 7 — <strong>Final Deliverable</strong></span>
+                        <h3>Model-Ready Verification & Portfolio Deployment <span class="status-badge">Planned</span></h3>
+                        <p>Programmatically filtering topological noise and dangling segments to output a clean, topographically valid stream network optimized for export into professional models (HSPF, CASC2D). The project closes with compilation into a standardized spatial dataframe and public deployment via a structured GitHub repository.</p>
                     </div>
                 </li>
 
