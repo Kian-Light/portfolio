@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Progress & DevLog | Kian Light</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Unique localized style rules for the Timeline cards */
+        .timeline {
+            position: relative;
+            border-left: 3px solid var(--primary);
+            margin: 20px 0 20px 15px;
+            padding: 0 0 0 25px;
+            list-style: none;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 2px solid white;
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+        .timeline-item.current::before {
+            background: #ff4757; /* Flashy alert color for active work */
+            box-shadow: 0 0 0 3px #ff4757;
+        }
+        .status-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+        .status-badge.active { background: #ffe0e6; color: #ff4757; }
+        .status-badge.done { background: #d4edda; color: #155724; }
+        .timestamp {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Current Project Status & DevLog</h1>
+        <p class="subtitle">A real-time update look into my active environmental datasets and scripting tasks</p>
+    </header>
+
+    <main style="max-width: 850px; margin: 0 auto; padding: 20px;">
+        <p><a href="index.html" style="color: #457b9d; text-decoration: none; font-weight: bold;">← Back to Homepage</a></p>
+
+        <section>
+            <h2>🎯 Active Focus Block</h2>
+            <p><strong>Project:</strong> Automated Watershed Delineation Pipeline (R + QGIS)</p>
+            <p>
+                I am actively translating manual GIS processing parameters into automated, programmatic R script sequences. The end-goal is a modular architecture capable of pulling any standard DEM raster and cleanly dumping fully calculated, vector-extracted stream network shapes.
+            </p>
+        </section>
+
+        <section>
+            <h2>🛠️ Project Roadmap & Timeline</h2>
+            
+            <ul class="timeline">
+                
+                <li class="timeline-item current">
+                    <span class="timestamp">July 2026 — <strong>In Progress</strong></span>
+                    <h3>Morphometric Index Calculators <span class="status-badge active">Active Focus</span></h3>
+                    <p>Debugging the R loop script designed to calculate bifurcation ratios across varying stream orders. Tuning the threshold matrix to filter out structural processing noise in high-density valleys.</p>
+                </li>
+
+                <li class="timeline-item">
+                    <span class="timestamp">June 2026</span>
+                    <h3>Automated Flow Direction & Accumulation Matrix <span class="status-badge done">Completed</span></h3>
+                    <p>Successfully integrated the D8 flow routing model via the <code>sf</code> package. Tested script loops on raw Digital Elevation Models (DEMs), confirming uninterrupted surface-runoff paths across artificial sinks.</p>
+                </li>
+
+                <li class="timeline-item">
+                    <span class="timestamp">May 2026</span>
+                    <h3>Pipeline Setup & Terrain Pre-Processing Skeletons <span class="status-badge done">Completed</span></h3>
+                    <p>Initialized repository structure. Configured background algorithm hooks linking computational R loops to core SAGA/QGIS spatial engines for initial sink-filling stages.</p>
+                </li>
+
+            </ul>
+        </section>
+
+    </main>
+
+</body>
+</html>
