@@ -19,43 +19,41 @@
         <section>
             <h2>Project Overview</h2>
             <p>
-                Presented as part of my B.Sc. in Geographical Sciences at the University of Bristol, this research integrated landscape ecology frameworks with empirical water quality assessments to evaluate the River Avon (Bristol) catchment. 
+                Presented as part of my B.Sc. in Geography at the University of Bristol, this research integrated landscape ecology frameworks with empirical water quality assessments to evaluate the River Avon (Bristol) catchment. 
             </p>
             <p>
-                While traditional studies focus solely on land use <em>composition</em> (how much of a land type is present), this project assessed how spatial <em>configuration</em> (the fragmentation and arrangement of land use patches) influences water quality variation along an urban river continuum.
+                While research traditionally focus on land use <em>composition</em> (proportion of land use types present), this project assessed how spatial <em>configuration</em> (the fragmentation and arrangement of land use patches) and configuration influences water quality variation along an urban river continuum.
             </p>
         </section>
 
         <section>
             <h2>Methodology & GIS/R Workflow</h2>
             <p>
-                The project combined field-derived primary data, acquired historical datasets, spatial modeling in GIS, and multivariate statistical analysis in R:
+                The project combined primary data, acquired historical datasets, spatial modeling in GIS, and multivariate statistical analysis in R:
             </p>
             <ul>
-                <li><strong>Empirical Sampling:</strong> Collected primary physical water quality data from 10 sites across the River Avon catchment (Dec 2025 – Jan 2026).</li>
-                <li><strong>Historical Data Acquisition:</strong> Secured historical water quality datasets (2013 and 2018) via a Freedom of Information (FOI) request to Bristol City Council.</li>
-                <li><strong>WQI Calculation:</strong> Developed an adapted 9-parameter National Sanitation Foundation Water Quality Index (NSFWQI) to standardize and compare water quality across sites and eras.</li>
-                <li><strong>Spatial Metrics & Buffering (QGIS):</strong> Mapped the river network and generated 1km (primary sites) and 650m (secondary sites) fixed riparian buffers. Calculated compositional percentage cover and configurational FRAGSTATS-equivalent landscape metrics (such as Aggregation Index, Interspersion & Juxtaposition, Shannon Diversity Index, and Patch Richness Density) using UKCEH Land Cover Maps.</li>
+                <li><strong>Empirical Sampling:</strong> Collected primary water quality data from 10 sites across the River Avon catchment (Dec 2025 – Jan 2026).</li>
+                <li><strong>Historical Data Acquisition:</strong> Obtained historical water quality datasets (2013 and 2018) via FOI request to Bristol City Council.</li>
+                <li><strong>WQI Calculation:</strong> Developed an adapted 9 parameter National Sanitation Foundation Water Quality Index (NSFWQI) to standardise and compare water quality across space and time.</li>
+                <li><strong>Spatial Metrics & Buffering (QGIS):</strong> Mapped the catchment and generated 1km (primary sites) and 650m (secondary sites) fixed riparian buffers. Calculated compositional and configurational FRAGSTATS equivalent landscape metrics (Aggregation Index, Interspersion & Juxtaposition, Shannon Diversity Index, and Patch Richness Density) using UKCEH Land Cover Maps.</li>
                 <li><strong>Statistical Modeling (R):</strong> Conducted Spearman's rank correlations, multiple linear regression (MLR), and Redundancy Analysis (RDA) to relate landscape indices to water quality. Checked spatial dependencies using Moran's I spatial autocorrelation.</li>
             </ul>
         </section>
 
         <section>
-            <h2>Key Findings & Scientific Insights</h2>
-            <p>
-                The analysis provided critical insights into how the spatial arrangement of our landscape dictates catchment health:
-            </p>
+            <h2>Key Findings</h2>
+           
             <ul>
-                <li><strong>Urban Drivers:</strong> Urban land cover emerged as the dominant multivariate predictor of water quality degradation, accounting for 42.55% of the observed variation.</li>
-                <li><strong>The Suburban Gradient:</strong> In the historical dataset, suburban percentage cover was identified as the only significant compositional predictor of water quality (rho = -0.893, p = 0.012).</li>
+                <li><strong>Urban Influence:</strong> Urban land cover was identified as the dominant multivariate predictor of water quality degradation, accounting for 42.55% of the observed variation.</li>
+                <li><strong>Suburban Gradient:</strong> In the historical dataset, suburban percentage cover was identified as the only significant compositional predictor of water quality (rho = -0.893, p = 0.012).</li>
                 <li><strong>Indicator Sensitivity:</strong> Dissolved Oxygen (DO) was the most consistently sensitive bivariate indicator, displaying a strong negative association with urban cover (rho = -0.890) and a strong positive association with broadleaf woodland cover (rho = 0.669).</li>
-                <li><strong>The Urban Continuum:</strong> The lack of significant seasonal variation across most sites suggests that persistent urban point-source pollution creates a consistent baseline pollution load, masking typical seasonal environmental signals.</li>
-                <li><strong>Spatial Autocorrelation:</strong> Significant spatial autocorrelation was identified (Moran's I = 0.545, p = 0.0018), highlighting the deep hydrological connectivity of the river continuum and signaling that local riparian metrics should be interpreted with spatial dependencies in mind.</li>
+                <li><strong>The Urban River Continuum:</strong> The lack of significant seasonal variation across most sites suggests that persistent urban point source pollution creates a consistent baseline pollution load, masking typical seasonal signals.</li>
+                <li><strong>Spatial Autocorrelation:</strong> Significant spatial autocorrelation was identified (Moran's I = 0.545, p = 0.0018), highlighting deep hydrological connectivity of the river continuum; local riparian metrics should be interpreted with consideration of spatial dependencies.</li>
             </ul>
         </section>
 
         <section>
-            <h2>Spatial Visualizations</h2>
+            <h2>Spatial Visualisations</h2>
             <p>The GIS analysis mapped Nitrate Vulnerable Zones (NVZs), Combined Sewage Overflow (CSO) locations, and riparian buffers across the River Avon catchment to model surface run-off impacts.</p>
             
             <div style="background: #f4f6f9; border: 2px dashed #cbd5e1; padding: 30px; text-align: center; border-radius: 8px; margin-top: 20px;">
