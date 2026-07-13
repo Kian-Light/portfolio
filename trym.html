@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microplastic Pollution Assessment | Kian Light</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Microplastic Pollution Assessment</h1>
+        <p class="subtitle">Partnered Research Project with Trout in the Trym Volunteer Group</p>
+    </header>
+
+    <main style="max-width: 850px; margin: 0 auto; padding: 20px;">
+        <p><a href="index.html" style="color: #457b9d; text-decoration: none; font-weight: bold;">← Back to Homepage</a></p>
+
+        <section>
+            <h2>Project Overview & Objective</h2>
+            <p>
+                Collaborating directly with community group <strong>Trout in the Trym</strong>, this project evaluated microplastic (MP) sediment and water concentration gradients along the River Trym. Because volunteer organizations often lack the equipment for direct microplastic detection, our primary objective was determining if common water markers could serve as reliable proxies.
+            </p>
+        </section>
+
+        <section>
+            <h2>Methodology & Analytical Pipeline</h2>
+            <ul>
+                <li><strong>Laboratory Quantification:</strong> Leveraged Nile Red fluorescent dye markers on filtered samples, photographing papers under UV lighting to execute manual microplastic particle counts.</li>
+                <li><strong>Geospatial Structuring:</strong> Converted coordinate data for sampling sites and regional Combined Sewage Ouflows (CSOs) into operational geospatial points using the <code>sf</code> spatial data package in R.</li>
+                <li><strong>Interactive Mapping:</strong> Coded an interactive web app map using the <code>leaflet</code> package to visualize downstream distribution patterns.</li>
+                <li><strong>Statistical Framework:</strong> Tested variance trends with a one-way ANOVA and plotted linear regression parameters using <code>ggplot2</code> to track concentrations relative to downstream distances from CSOs.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Critical Findings</h2>
+            <p>
+                Microplastic distribution varied extensively across the network, scaling up to <strong>113.48 MP/g</strong> (Mean: 27.6 MP/g). While regression models tracked a concentration increase downstream from CSOs (coefficient 0.0125, explaining 18% of variance), it lacked full statistical significance. 
+            </p>
+            <p>
+                Crucially, Kendall's correlations proved that electrical conductivity serves only as a moderate proxy, and dissolved oxygen as a weak one. Other indicators (pH, <em>E. coli</em>, TOC) demonstrated no statistical tie, allowing us to deliver a vital insight to the stakeholder: direct measurements cannot safely be bypassed for proxy monitoring.
+            </p>
+        </section>
+    </main>
+
+</body>
+</html>
