@@ -210,3 +210,77 @@ main a[href="index.html"]:hover {
     color: var(--primary);
     text-decoration: underline;
 }
+
+/* --- Re-engineered Timeline & Progress Tracker --- */
+.timeline-container {
+    position: relative;
+    padding-left: 32px;
+    margin-top: 24px;
+}
+
+/* The vertical tracking line */
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 7px; /* Perfectly aligns line with the center of a 16px wide circle */
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background-color: var(--border);
+    z-index: 1;
+}
+
+/* Individual status rows */
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start; /* Keeps text flowing naturally from the top */
+    margin-bottom: 20px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* The Progress Indicator Circles */
+.timeline-badge {
+    position: absolute;
+    left: -32px; /* Pulls it back onto the line container */
+    top: 4px;    /* Micro-adjusted to perfectly align with the first line of text */
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 2px solid var(--text-muted);
+    z-index: 2; /* Sits cleanly on top of the vertical line */
+    box-sizing: border-box;
+}
+
+/* Status variants for your tracking nodes */
+.timeline-badge.completed {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.timeline-badge.in-progress {
+    background-color: #ffffff;
+    border-color: #e11d48; /* Crimson red accent to match live banner pulse */
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15); /* Soft technical glow */
+}
+
+/* Content block alignment */
+.timeline-content {
+    padding-left: 8px;
+}
+
+.timeline-content h4 {
+    margin: 0 0 4px 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.timeline-content p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
