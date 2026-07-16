@@ -101,6 +101,31 @@
             color: #64748b;
             font-weight: 600;
         }
+
+        /* Syntax Highlighted Code Container */
+        .code-container {
+            background-color: #0f172a;
+            color: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', Consolas, Monaco, monospace;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            border-left: 4px solid #457b9d;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .code-container pre {
+            margin: 0;
+        }
+        .code-title {
+            font-size: 0.95rem;
+            color: #475569;
+            font-weight: 600;
+            margin-bottom: -15px;
+            margin-top: 25px;
+        }
     </style>
 </head>
 <body>
@@ -183,6 +208,63 @@
                         <img src="OSRIVER150000.png" alt="OS Open Rivers overlay comparison">
                         <p>OS Open Rivers Overlay (150,000)</p>
                     </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>R Implementation & Precision Verification Pipeline</h2>
+                <p>The core algorithm interface, threshold prototyping loops, and validation metrics used to score precision metrics against spatial vector baselines are structured below:</p>
+
+                <div class="code-title">1. Hydrological Delineation via QGIS-GRASS Bridge</div>
+                <div class="code-container">
+                    <pre><code># Trigger GRASS r.watershed processing via qgisprocess
+result5 &lt;- qgis_run_algorithm(
+  "grass:r.watershed",
+  elevation    = dem_path,
+  threshold    = 120000,
+  accumulation = qgis_tmp_raster(),
+  drainage     = qgis_tmp_raster(),
+  basin        = qgis_tmp_raster(),
+  stream       = qgis_tmp_raster(),
+  tci          = qgis_tmp_raster(),
+  spi          = qgis_tmp_raster()
+)
+
+# Extract stream network raster output
+streams5 &lt;- rast(as.character(qgis_extract_output(result5, "stream")))</code></pre>
+                </div>
+
+                <div class="code-title">2. Custom Sensitivity Evaluation Functions</div>
+                <div class="code-container">
+                    <pre><code># Compute exact precision metrics inside spatial buffers
+score_threshold &lt;- function(streams_raster, buffer_vect) {
+  # Convert stream extraction cells to distinct vector points
+  stream_pts &lt;- as.points(streams_raster)
+  total_cells &lt;- length(stream_pts)
+  
+  # Check intersection matrices inside the validation boundary
+  inside &lt;- is.related(stream_pts, buffer_vect, "intersects")
+  matched_cells &lt;- sum(inside)
+  pct_match &lt;- 100 * matched_cells / total_cells
+  
+  return(list(
+    total = total_cells, 
+    matched = matched_cells, 
+    pct_match = pct_match
+  ))
+}
+
+# Calculate recall metrics against the source river network lines
+score_recall &lt;- function(streams_raster, rivers_line, buffer_dist = 50) {
+  stream_pts &lt;- as.points(streams_raster)
+  stream_buffer &lt;- st_buffer(st_as_sf(stream_pts), dist = buffer_dist)
+  stream_buffer_union &lt;- st_union(stream_buffer)
+  
+  rivers_covered &lt;- st_intersection(rivers_line, stream_buffer_union)
+  pct_length_covered &lt;- 100 * sum(st_length(rivers_covered)) / sum(st_length(rivers_line))
+  
+  return(pct_length_covered)
+}</code></pre>
                 </div>
             </section>
 
