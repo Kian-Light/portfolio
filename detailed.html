@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevLog Details</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 { color: #1e293b; margin-bottom: 5px; }
+        h2 { color: #334155; margin-top: 30px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        h3 { color: #475569; }
+        .back-link {
+            color: #457b9d;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .badge {
+            background: #ffe0e6;
+            color: #ff4757;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .badge.done {
+            background: #d4edda;
+            color: #155724;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th { background-color: #f1f5f9; color: #1e293b; }
+        code {
+            background-color: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .callout {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="https://github.com/your-username/your-repo/blob/main/devlog.html" class="back-link">← Back to Main Timeline</a>
+        
+        <header>
+            <h1>Sensitivity Analysis & Prototyping</h1>
+            <p style="color: #64748b; margin: 5px 0 0 0;">An evaluation of DEM flow-routing algorithms and threshold verification against OS Open Rivers.</p>
+        </header>
+
+        <main>
+            <section>
+                <h2>1. What Has Been Completed <span class="badge done">Done</span></h2>
+                <ul>
+                    <li><strong>Data Integration:</strong> Successfully sourced raw regional DEM tiles and reprojected all spatial data frames to standard metric coordinate system (<code>EPSG:27700</code> / British National Grid).</li>
+                    <li><strong>Bridge Environment Connected:</strong> Fully established communication between R and QGIS/GRASS via <code>qgisprocess::qgis_configure()</code> utilizing the <code>grass:r.watershed</code> algorithm.</li>
+                </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Flow Accumulation Prototyping <span class="badge">Active</span></h2>
+                <p>To justify threshold selection prior to running the master batch loop, we ran a thorough sensitivity analysis using a 50m buffer against OS Open Rivers. We benchmarked Multiple Flow Direction (MFD) against Single Flow Direction (D8) routing at a 120,000 cell threshold:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Routing Method</th>
+                            <th>Threshold (Cells)</th>
+                            <th>Buffer Radius</th>
+                            <th>Precision (%)</th>
+                            <th>Recall (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>MFD</strong> (streams5)</td>
+                            <td>120,000</td>
+                            <td>50m</td>
+                            <td>50.4%</td>
+                            <td>51.0%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D8</strong> (streams_d8)</td>
+                            <td>120,000</td>
+                            <td>50m</td>
+                            <td>50.9%</td>
+                            <td>51.0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="callout">
+                    <strong>Key Insight:</strong> Changing the routing algorithm from MFD to D8 provided a negligible precision bump (50.9% vs 50.4%). The inherent ceiling limit (~51% recall) points to differences between purely topographic DEM generation and ground-surveyed river vectors, rather than threshold selection. This comparison provides solid evidence for the README methodology section!
+                </div>
+            </section>
+
+            <section>
+                <h2>3. Next Immediate Steps</h2>
+                <ol>
+                    <li><strong>Sink-Filling:</strong> Introduce a sink-filling pre-processing step to prevent artificial drainage interruptions.</li>
+                    <li><strong>Data Filtering:</strong> Filter out estimated connector segments in the OS dataset (<code>fictitious == 0</code>) to establish a cleaner validation baseline.</li>
+                    <li><strong>Script Automation:</strong> Formulate the R function wrapper for <code>qgisprocess</code> and initiate the processing loop over the remaining Cheshire and Greater Manchester DEM files.</li>
+                </ol>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
