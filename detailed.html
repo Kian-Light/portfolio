@@ -35,9 +35,11 @@
             margin-bottom: 20px;
         }
         .back-link:hover { text-decoration: underline; }
+        
+        /* Badges */
         .badge {
-            background: #ffe0e6;
-            color: #ff4757;
+            background: #e2e8f0;
+            color: #64748b;
             padding: 3px 8px;
             border-radius: 12px;
             font-size: 0.8rem;
@@ -48,6 +50,11 @@
             background: #d4edda;
             color: #155724;
         }
+        .badge.active {
+            background: #ffe0e6;
+            color: #ff4757;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -59,13 +66,17 @@
             border-bottom: 1px solid #e2e8f0;
         }
         th { background-color: #f1f5f9; color: #1e293b; }
+        
+        /* General Inline Code */
         code {
             background-color: #f1f5f9;
             padding: 2px 6px;
             border-radius: 4px;
             font-family: monospace;
             font-size: 0.9em;
+            color: #333;
         }
+
         .callout {
             background-color: #f0fdf4;
             border-left: 4px solid #16a34a;
@@ -102,23 +113,33 @@
             font-weight: 600;
         }
 
-        /* Syntax Highlighted Code Container */
+        /* Fixed Syntax Highlighted Code Container */
         .code-container {
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: #1e293b; /* Dark slate */
             border-radius: 8px;
             padding: 20px;
             margin: 25px 0;
             overflow-x: auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #457b9d;
+        }
+        
+        /* Ensures the code text is readable and removes the "white box" effect */
+        .code-container pre {
+            margin: 0;
+            white-space: pre;
+        }
+        
+        .code-container code {
+            background-color: transparent !important; /* Removes the white box */
+            color: #e2e8f0 !important; /* Light gray text for high contrast */
+            padding: 0;
             font-family: 'Fira Code', Consolas, Monaco, monospace;
             font-size: 0.88rem;
             line-height: 1.5;
-            border-left: 4px solid #457b9d;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 0;
         }
-        .code-container pre {
-            margin: 0;
-        }
+
         .code-title {
             font-size: 0.95rem;
             color: #475569;
@@ -147,7 +168,7 @@
             </section>
 
             <section>
-                <h2>2. Current Task: Flow Accumulation Prototyping <span class="badge">Active</span></h2>
+                <h2>2. Technical Task: Flow Accumulation Prototyping <span class="badge done">Done</span></h2>
                 <p>To justify threshold selection prior to running the master batch loop, I ran a sensitivity analysis using a 50m buffer against OS Open Rivers. I benchmarked Multiple Flow Direction (MFD) against Single Flow Direction (D8) routing at a 120,000 cell threshold:</p>
 
                 <table>
@@ -218,7 +239,7 @@
                 <div class="code-title">1. Hydrological Delineation via QGIS-GRASS Bridge</div>
                 <div class="code-container">
                     <pre><code># Trigger GRASS r.watershed processing via qgisprocess
-result5 &lt;- qgis_run_algorithm(
+result5 <- qgis_run_algorithm(
   "grass:r.watershed",
   elevation    = dem_path,
   threshold    = 120000,
@@ -231,21 +252,21 @@ result5 &lt;- qgis_run_algorithm(
 )
 
 # Extract stream network raster output
-streams5 &lt;- rast(as.character(qgis_extract_output(result5, "stream")))</code></pre>
+streams5 <- rast(as.character(qgis_extract_output(result5, "stream")))</code></pre>
                 </div>
 
                 <div class="code-title">2. Custom Sensitivity Evaluation Functions</div>
                 <div class="code-container">
                     <pre><code># Compute exact precision metrics inside spatial buffers
-score_threshold &lt;- function(streams_raster, buffer_vect) {
+score_threshold <- function(streams_raster, buffer_vect) {
   # Convert stream extraction cells to distinct vector points
-  stream_pts &lt;- as.points(streams_raster)
-  total_cells &lt;- length(stream_pts)
+  stream_pts <- as.points(streams_raster)
+  total_cells <- length(stream_pts)
   
   # Check intersection matrices inside the validation boundary
-  inside &lt;- is.related(stream_pts, buffer_vect, "intersects")
-  matched_cells &lt;- sum(inside)
-  pct_match &lt;- 100 * matched_cells / total_cells
+  inside <- is.related(stream_pts, buffer_vect, "intersects")
+  matched_cells <- sum(inside)
+  pct_match <- 100 * matched_cells / total_cells
   
   return(list(
     total = total_cells, 
@@ -255,13 +276,13 @@ score_threshold &lt;- function(streams_raster, buffer_vect) {
 }
 
 # Calculate recall metrics against the source river network lines
-score_recall &lt;- function(streams_raster, rivers_line, buffer_dist = 50) {
-  stream_pts &lt;- as.points(streams_raster)
-  stream_buffer &lt;- st_buffer(st_as_sf(stream_pts), dist = buffer_dist)
-  stream_buffer_union &lt;- st_union(stream_buffer)
+score_recall <- function(streams_raster, rivers_line, buffer_dist = 50) {
+  stream_pts <- as.points(streams_raster)
+  stream_buffer <- st_buffer(st_as_sf(stream_pts), dist = buffer_dist)
+  stream_buffer_union <- st_union(stream_buffer)
   
-  rivers_covered &lt;- st_intersection(rivers_line, stream_buffer_union)
-  pct_length_covered &lt;- 100 * sum(st_length(rivers_covered)) / sum(st_length(rivers_line))
+  rivers_covered <- st_intersection(rivers_line, stream_buffer_union)
+  pct_length_covered <- 100 * sum(st_length(rivers_covered)) / sum(st_length(rivers_line))
   
   return(pct_length_covered)
 }</code></pre>
